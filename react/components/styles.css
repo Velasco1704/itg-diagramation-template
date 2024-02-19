@@ -1,0 +1,83 @@
+.grid {
+  width        : 100%;
+  display      : flex;
+  place-content: center;
+  gap          : .25rem;
+  position     : relative;
+  margin       : 6rem 0;
+  padding      : 0 10rem;
+}
+
+.grid::before {
+  content   : '';
+  height    : 5rem;
+  width     : 100%;
+  background: black;
+  position  : absolute;
+  top       : -6rem;
+  left      : 0;
+}
+
+.grid--1>div:nth-child(1) {
+  order: 2;
+}
+
+.grid--1>div:nth-child(2) {
+  order: 1;
+}
+
+.grid--1>div:nth-child(3) {
+  order: 3;
+}
+
+.grid--3>div:nth-child(1) {
+  order: 1;
+}
+
+.grid--3>div:nth-child(2) {
+  order: 2;
+}
+
+.grid--3>div:nth-child(3) {
+  order: 3;
+}
+
+.grid--3>div:nth-child(1) {
+  order: 3;
+}
+
+.grid--3>div:nth-child(2) {
+  order: 2;
+}
+
+.grid--3>div:nth-child(3) {
+  order: 1;
+}
+
+.grid__item--big {
+  background: orange;
+  width     : 50%;
+  height    : 10rem;
+}
+
+.grid__item--small {
+  background: yellow;
+  width     : 25%;
+  height    : 10rem;
+}
+
+
+@media (max-width: 1025px) {
+  .grid {
+    flex-direction: column;
+  }
+
+  .grid::before {
+    height: 4rem;
+  }
+
+  .grid__item--big,
+  .grid__item--small {
+    width: 100%;
+  }
+}
