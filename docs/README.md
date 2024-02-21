@@ -1,114 +1,175 @@
-📢 Use this project, [contribute](https://github.com/{OrganizationName}/{AppName}) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
+# Diagramation Templete
 
-# APP NAME
+Este componente se encarga de crear una grilla interactiva que cambie el orden y recibirá componentes hijos
 
-<!-- DOCS-IGNORE:start -->
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-<!-- DOCS-IGNORE:end -->
+## Instalación
 
-Under the app's name, you should explain the topic, giving a **brief description** of its **functionality** in a store when installed.
+### 1. Clonar repositorio
 
-Next, **add media** (either an image of a GIF) with the rendered components, so that users can better understand how the app works in practice. 
+Copia el [repositorio](https://github.com/Velasco1704/itg-diagramation-template/) del proyecto y clonarlo en tu terminal.
 
-![Media Placeholder](https://user-images.githubusercontent.com/52087100/71204177-42ca4f80-227e-11ea-89e6-e92e65370c69.png)
+```bash
+git clone https://github.com/Velasco1704/itg-diagramation-template/
+```
 
-## Configuration 
+### 2. Acceder a la Carpeta del Proyecto
 
-In this section, you first must **add the primary instructions** that will allow users to use the app's blocks in their store, such as:
+Después de clonar el repositorio, entra a la carpeta del proyecto utilizando el siguiente comando:
 
-1. Adding the app as a theme dependency in the `manifest.json` file;
-2. Declaring the app's main block in a given theme template or inside another block from the theme.
+```bash
+cd itg-diagramation-template
+```
 
-Remember to add a table with all blocks exported by the app and their descriptions. You can verify an example of it on the [Search Result documentation](https://vtex.io/docs/components/all/vtex.search-result@3.56.1/). 
+### 3. Instalar dependencias de la carpeta react
 
-Next, add the **props table** containing your block's props. 
+Entra a la carpeta de react y instala las dependencias.
 
-If the app exports more than one block, create several tables - one for each block. For example:
+```bash
+cd react && yarn
+```
 
-### `block-1` props
+> [!NOTE]
+> No uses npm y yarn al mismo tiempo esto va a causar conflictos
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+### 4. Iniciar Sesión en VTEX
 
+Para poder trabajar con VTEX, necesitas iniciar sesión con tu cuenta. Utiliza el siguiente comando y reemplaza {account} con tu nombre de cuenta de VTEX:
 
-### `block-2` props
+```bash
+vtex login { account }
+```
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+### 5. Seleccionar el Espacio de Trabajo
 
-Prop types are: 
+Una vez que hayas iniciado sesión, selecciona el espacio de trabajo en el que deseas trabajar utilizando el siguiente comando. Reemplaza {workspace} con el nombre de tu espacio de trabajo:
 
-- `string` 
-- `enum` 
-- `number` 
-- `boolean` 
-- `object` 
-- `array` 
+```bash
+vtex use { workspace }
+```
 
-When documenting a prop whose type is `object` or `array` another prop table will be needed. You can create it following the example below:
+### 6. Enlazar el Proyecto al Espacio de Trabajo
 
-- `propName` object:
+Finalmente, enlaza el proyecto a tu espacio de trabajo para visualizarlo ejecutando el siguiente comando:
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+```bash
+vtex link
+```
 
+### 7. Agrega el componente
 
-Remember to also use this Configuration section to  **showcase any necessary disclaimer** related to the app and its blocks, such as the different behavior it may display during its configuration. 
+Agrega el componente en el `manifest.json` de tu **store theme**
 
-## Modus Operandi *(not mandatory)*
+```JSON
+"dependencies": {
+   "{accountName}.{appName}": "{appVersion}",
+    "vtex.store": "2.x",
+    "vtex.store-header": "2.x"
+}
+```
 
-There are scenarios in which an app can behave differently in a store, according to how it was added to the catalog, for example. It's crucial to go through these **behavioral changes** in this section, allowing users to fully understand the **practical application** of the app in their store.
+## Descripción general del proyecto y su uso
 
-If you feel compelled to give further details about the app, such as it's **relationship with the VTEX admin**, don't hesitate to use this section. 
+### Componentes
 
-## Customization
+El código consta de tres componentes principales: `CustomGrid`, `CustomGridItemSmall` y `CustomGridItemBig`.
 
-The first thing that should be present in this section is the sentence below, showing users the recipe pertaining to CSS customization in apps:
+#### CustomGrid
 
-`In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).`
+El componente CustomGrid es un componente que renderiza un diseño de cuadrícula personalizado. Acepta dos propiedades: `children` y `gridType`. La propiedad `children` es un array de nodos de React, y la propiedad `gridType` es un número que determina el tipo de diseño de cuadrícula a renderizar.
 
-Thereafter, you should add a single column table with the available CSS handles for the app, like the one below. Note that the Handles must be ordered alphabetically.
+```tsx
+import React from 'react'
+import { useCssHandles } from 'vtex.css-handles'
 
-| CSS Handles |
-| ----------- | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` |
+import { customGridSchema } from '../schemas/custom-gird-schemas'
+import CustomGridItemBig from './CustomGridItemBig'
+import CustomGridItemSmall from './CustomGridItemSmall'
+import './styles.css'
 
+interface Props {
+  children: React.ReactNode[]
+  gridType: number
+}
 
-If there are none, add the following sentence instead:
+const CustomGrid = ({ children, gridType = 1 }: Props) => {
+  const cssHandles = ['grid', `grid--${gridType}`]
+  const handles = useCssHandles(cssHandles)
+  const gridTypeClass = Object.keys(handles)[1] as string
 
-`No CSS Handles are available yet for the app customization.`
+  return (
+    <div className={`${handles.grid} ${handles[gridTypeClass]}`}>
+      <CustomGridItemBig element={children[0]} />
+      <CustomGridItemSmall elementOne={children[1]} elementTwo={children[2]} />
+      <CustomGridItemSmall elementOne={children[3]} elementTwo={children[4]} />
+    </div>
+  )
+}
 
-<!-- DOCS-IGNORE:start -->
+CustomGrid.schema = customGridSchema
+```
 
-## Contributors ✨
+La variable `gridTypeClass` se utiliza en el componente CustomGrid para obtener la clase CSS correspondiente al tipo de grilla seleccionado. Esta variable se crea utilizando el método `Object.keys(handles)[1]` para obtener la segunda clave del objeto handles como una cadena.
 
-Thanks goes to these wonderful people:
+El esquema de la grilla personalizada se define en el objeto `customGridSchema`. Este objeto define las propiedades del componente `CustomGrid` que se pueden configurar en site editor.
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+```ts
+export const customGridSchema = {
+  title: 'Grilla Custom',
+  type: 'object',
+  properties: {
+    gridType: {
+      title: 'Tipo de Grilla',
+      type: 'number',
+      enum: [1, 2, 3],
+    },
+  },
+}
+```
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+#### CustomGridItemSmall
 
-<!-- DOCS-IGNORE:end -->
+El componente `CustomGridItemSmall` es un componente secundario de la grilla personalizada. Toma dos propiedades: `elementOne` y `elementTwo`, que son elementos React que se mostrarán dentro del componente.
 
----- 
+```tsx
+import React from 'react'
+import { useCssHandles } from 'vtex.css-handles'
+import './styles.css'
 
-Check out some documentation models that are already live: 
-- [Breadcrumb](https://github.com/vtex-apps/breadcrumb)
-- [Image](https://vtex.io/docs/components/general/vtex.store-components/image)
-- [Condition Layout](https://vtex.io/docs/components/all/vtex.condition-layout@1.1.6/)
-- [Add To Cart Button](https://vtex.io/docs/components/content-blocks/vtex.add-to-cart-button@0.9.0/)
-- [Store Form](https://vtex.io/docs/components/all/vtex.store-form@0.3.4/)
+interface Props {
+  elementOne: React.ReactNode
+  elementTwo: React.ReactNode
+}
+
+const CustomGridItemSmall = ({ elementOne, elementTwo }: Props) => {
+  const cssHandles = ['grid__item--small']
+  const handles = useCssHandles(cssHandles)
+
+  return (
+    <div className={handles['grid__item--small']}>
+      {elementOne}
+      {elementTwo}
+    </div>
+  )
+}
+```
+
+#### CustomGridItemBig
+
+El componente `CustomGridItemBig` es otro componente secundario de la grilla personalizada. Toma una propiedad llamada `element`, que es un elemento React que se mostrará dentro del componente.
+
+```tsx
+import React from 'react'
+import { useCssHandles } from 'vtex.css-handles'
+import './styles.css'
+
+interface Props {
+  element: React.ReactNode
+}
+
+const CustomGridItemBig = ({ element }: Props) => {
+  const cssHandles = ['grid__item--big']
+  const handles = useCssHandles(cssHandles)
+
+  return <div className={handles['grid__item--big']}>{element}</div>
+}
+```
